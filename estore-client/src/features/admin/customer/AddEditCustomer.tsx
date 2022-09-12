@@ -7,7 +7,7 @@ import CustomerService from "../../../services/CustomerService";
 import Customer from "../../../shared/models/CustomerModel";
 import CustomerOrders from "./CustomerOrders";
 import CustomerCardDetails from "./CustomerCardDetails";
-import CustomerShippingDetails from "./CustomerShippingDetails";
+import CustomerShippingDetails from "./CustomerShippingDetails"; 
 
 interface ITabPanelProps {
   value: number;
