@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="19.429" height="22.859" viewBox="0 0 19.429 22.859">
+  <g id="green-pin" transform="matrix(0.799, 0.602, -0.602, 0.799, -59.948, -537.217)">
+    <path id="Subtraction_1" data-name="Subtraction 1" d="M4.012,2.675A5.112,5.112,0,0,1,1.2,1.893a2.976,2.976,0,0,1-.863-.85A2,2,0,0,1,0,0H8.023A2,2,0,0,1,7.69,1.043a2.975,2.975,0,0,1-.863.85,5.112,5.112,0,0,1-2.815.782Z" transform="translate(381.398 385)" fill="#028104"/>
+    <path id="Path_8" data-name="Path 8" d="M1644.77-149v5.165a11.776,11.776,0,0,1,2.358-.27,10.143,10.143,0,0,1,2.254.27V-149a15.124,15.124,0,0,1-2.254.189A17.564,17.564,0,0,1,1644.77-149Z" transform="translate(-1261.552 537.15)" fill="#028104"/>
+    <path id="Subtraction_2" data-name="Subtraction 2" d="M6.41,0a7.331,7.331,0,0,0-4.5,1.456A5.209,5.209,0,0,0,.533,3.039,4.159,4.159,0,0,0,0,4.981H12.819a4.159,4.159,0,0,0-.533-1.942,5.208,5.208,0,0,0-1.379-1.583A7.331,7.331,0,0,0,6.41,0Z" transform="translate(379 393.67)" fill="#028104"/>
+    <circle id="Ellipse_3" data-name="Ellipse 3" cx="1.706" cy="1.706" r="1.706" transform="translate(383.519 406.029)" fill="#028104"/>
+    <path id="Path_9" data-name="Path 9" d="M1661.12-27.8l.379,9.15.695-9.15Z" transform="translate(-1276.262 426.893)" fill="#028104"/>
+    <path id="Path_10" data-name="Path 10" d="M1686.25-174.34h.985s-.542,1.291-1.636,1.389A1.831,1.831,0,0,0,1686.25-174.34Z" transform="translate(-1298.336 559.678)" fill="#fff"/>
+    <rect id="Rectangle_8" data-name="Rectangle 8" width="0.553" height="2.951" rx="0.276" transform="translate(383.888 389.243)" fill="#fff"/>
+    <path id="Path_11" data-name="Path 11" d="M1609.86-68.686h2.092a3.427,3.427,0,0,1,.941-3.254,3.988,3.988,0,0,0-3.033,3.254Z" transform="translate(-1229.582 466.722)" fill="#fff"/>
+  </g>
+</svg>
