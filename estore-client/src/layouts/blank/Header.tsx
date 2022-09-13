@@ -1,3 +1,4 @@
+import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,50 +8,60 @@ import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/material/styles";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import frontendRoutes from "../../shared/routes/FrontendRoute";
+import SearchField from "../../features/frontend/catalog/SearchField";
 
 const MuiNavLink = styled(NavLink)({
   color: "#fff",
   textDecoration: "none",
-  marginRight: 8,
-  fontSize: 18,
+  marginRight: 5,
 });
+
 const Header = () => {
+  const { pathname } = useLocation();
+
+  console.log("Pathname ", pathname);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <Avatar
             alt="Topper Skills"
-            src="images/estore.jpg"
-            sx={{ width: 56, height: 56, marginRight: 2 }}
+            src="images/logo.png"
+            sx={{ width: 56, height: 56, marginRight: 3 }}
           />
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1 }}
-          >
+          <Typography variant="h6" component="div">
             Topper Skills
           </Typography>
-          {Array.isArray(frontendRoutes) &&
-            frontendRoutes
-              .filter((route) => route.showInMenu)
-              ?.map(({ path, label }, i) => {
-                return (
-                  <MuiNavLink
-                    key={path + i}
-                    to={path}
-                    style={({ isActive }) => {
-                      return {
-                        color: isActive ? "yellow" : "#fff",
-                      };
-                    }}
-                  >
-                    {label}
-                  </MuiNavLink>
-                );
-              })}
+
+          {(pathname == "/" || pathname == "/catalog") && (
+            <Box sx={{ flexGrow: 1, maxWidth: 400, margin: "auto" }}>
+              <SearchField />
+            </Box>
+          )}
+          <Box sx={{ marginLeft: "auto" }}>
+            {Array.isArray(frontendRoutes) &&
+              frontendRoutes
+                .filter((route) => route.showInMenu)
+                ?.map(({ path, label }, i) => {
+                  return (
+                    <MuiNavLink
+                      key={path + i}
+                      to={path}
+                      style={({ isActive }) => {
+                        return {
+                          color: isActive ? "#aaa" : "#fff",
+                          fontWeight: isActive ? "bold" : "normal",
+                        };
+                      }}
+                    >
+                      {label}
+                    </MuiNavLink>
+                  );
+                })}
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
