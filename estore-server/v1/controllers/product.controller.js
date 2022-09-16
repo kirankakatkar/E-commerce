@@ -129,6 +129,7 @@ class ProductCtrl {
 
     ProductModel.find(filter)
       .populate("categories ratings")
+      .sort(sortObj)
       .exec()
       .then((result) => {
         res.status(200).send({
