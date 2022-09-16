@@ -9,6 +9,15 @@ class ProductCtrl {
     if (req.files)
       product.images = req?.files?.map((file) => `products/${file?.filename}`);
 
+    if (typeof product.categories == "string")
+      product.categories = product.categories?.split(",");
+
+    if (typeof product.sizes == "string")
+      product.sizes = product.sizes?.split(",");
+
+    if (typeof product.colors == "string")
+      product.colors = product.colors?.split(",");
+
     new ProductModel(product)
       .save()
       .then((result) => {
@@ -23,7 +32,17 @@ class ProductCtrl {
   static updateProduct(req, res) {
     const { id } = req.params;
     const product = req.body;
-    product.images = req?.files?.map((file) => `products/${file?.filename}`);
+    if (req?.files?.length > 0)
+      product.images = req?.files?.map((file) => `products/${file?.filename}`);
+
+    if (typeof product.categories == "string")
+      product.categories = product.categories?.split(",");
+
+    if (typeof product.sizes == "string")
+      product.sizes = product.sizes?.split(",");
+
+    if (typeof product.colors == "string")
+      product.colors = product.colors?.split(",");
 
     ProductModel.findOneAndUpdate({ _id: id }, product)
       .then((result) => {
@@ -79,14 +98,34 @@ class ProductCtrl {
 
   //fetchAllProduct
   static fetchAllProduct(req, res) {
-    const { status, category, brand, minPrice, maxPrice, color, size } =
-      req.query;
+    const { status, cat, brand, sortBy, colors, sizes } = req.query;
 
     let filter = {};
     if (!status) filter = { $or: [{ status: 0 }, { status: 1 }] };
 
+    if (cat) {
+      const catArr = cat.split("_");
+      filter.categories = { $in: catArr };
+    }
+
+    if (colors) {
+      const colorArr = colors.split("_");
+      filter.colors = { $in: colorArr };
+    }
+
+    if (sizes) {
+      const sizeArr = sizes.split("_");
+      filter.sizes = { $in: sizeArr };
+    }
+
     if (status) filter.status = status;
     if (brand) filter.brand = brand;
+
+    console.log("filter", filter);
+
+    const sortObj = {};
+    if (sortBy == "priceAsc") sortObj.price = 1;
+    if (sortBy == "priceDesc") sortObj.price = -1;
 
     ProductModel.find(filter)
       .populate("categories ratings")

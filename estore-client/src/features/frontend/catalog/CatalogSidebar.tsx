@@ -5,11 +5,13 @@ import { Theme } from "@mui/material";
 import ProductCategories from "./ProductCategories";
 import FilterProduct from "./FilterProduct";
 
-interface ICatalogSidebarProps {}
+interface ICatalogSidebarProps {
+  filterState: { colors: string[]; sizes: string[] };
+}
 
-const CatalogSidebar: React.FunctionComponent<ICatalogSidebarProps> = (
-  props
-) => {
+const CatalogSidebar: React.FunctionComponent<ICatalogSidebarProps> = ({
+  filterState,
+}) => {
   return (
     <Box
       component="aside"
@@ -23,13 +25,15 @@ const CatalogSidebar: React.FunctionComponent<ICatalogSidebarProps> = (
 
       {/* filterproduct  */}
 
-      <FilterProduct name="sizes" title="Sizes" data={["s", "m", "l", "xl"]} />
+      {/* <FilterProduct name="sizes" title="Sizes" data={["s", "m", "l", "xl"]} /> */}
+      <FilterProduct name="sizes" title="Sizes" data={filterState.sizes} />
 
-      <FilterProduct
+      {/* <FilterProduct
         name="colors"
         title="Colors"
         data={["red", "green", "blue", "cyan"]}
-      />
+      /> */}
+      <FilterProduct name="colors" title="Colors" data={filterState.colors} />
     </Box>
   );
 };

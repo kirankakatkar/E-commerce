@@ -28,6 +28,10 @@ const ProductCategories: FunctionComponent<IProductCategories> = ({}) => {
 
   useEffect(() => {
     if (selected.length > 0) setSearchParams({ cat: selected.join("_") });
+    else{
+      searchParams.delete("cat");
+      setSearchParams(searchParams)
+    }
   }, [selected]);
 
   React.useEffect(() => {

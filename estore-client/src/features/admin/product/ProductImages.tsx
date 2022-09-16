@@ -30,9 +30,12 @@ const ProductImages: React.FunctionComponent<IProductImagesProps> = ({
 
   // set the images received from server to the strimages
   React.useEffect(() => {
-    const arr = product.images?.map(
-      (image: string | any) => `${endpoints.serverBaseURL}/${image}`
-    );
+    const arr =
+      Array.isArray(product.images) &&
+      typeof product.images[0] == "string" &&
+      product.images?.map(
+        (image: string | any) => `${endpoints.serverBaseURL}/${image}`
+      );
 
     if (arr) setStrImages(arr);
   }, [product]);
@@ -41,8 +44,9 @@ const ProductImages: React.FunctionComponent<IProductImagesProps> = ({
     const files = e?.target?.files;
     console.log("FileList: ", files);
 
-    if ((files?.length as number) + images?.length > 5)
+    if ((files?.length as number) + images?.length > 5) {
       alert("only 5 files are allowed, remove existing to select new");
+    }
 
     let arr = [];
     if (files) for (const file of files) arr.push(file);
@@ -87,9 +91,10 @@ const ProductImages: React.FunctionComponent<IProductImagesProps> = ({
           files?.forEach((file) => {
             console.log("FIle:-- ", file);
 
-            if (!arr.includes((file as any).value))
-              arr.unshift((file as any).value);
+            // if (!arr.includes((file as any).value))
+            arr.unshift((file as any).value);
           });
+          console.log("Arr:-- ", arr);
           setStrImages(arr);
         }
       });

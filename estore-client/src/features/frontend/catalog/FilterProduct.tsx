@@ -36,6 +36,9 @@ const FilterProduct: React.FunctionComponent<IFilterProductProps> = ({
       for (const [prop, value] of searchParams) obj[prop] = value;
 
       setSearchParams({ ...obj, [name]: selected.join("_") });
+    } else {
+      searchParams.delete(name);
+      setSearchParams(searchParams);
     }
   }, [selected]);
 
