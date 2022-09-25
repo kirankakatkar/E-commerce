@@ -3,6 +3,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import { endpoints } from "../../../api";
+
+import { useDispatch } from "react-redux";
+import { addItem } from "../../../app/slices/CartSlice";
+
 interface Rating {
   rate: number;
 }
@@ -25,6 +29,13 @@ const ProductItem: React.FunctionComponent<IProductItemProps> = ({
   ratings,
   title,
 }) => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (id: string) => {
+    if (id) {
+      dispatch(addItem({ _id: id }));
+    }
+  };
   return (
     <Box
       sx={{
@@ -56,7 +67,13 @@ const ProductItem: React.FunctionComponent<IProductItemProps> = ({
         value={ratings?.reduce((p, r) => p + r.rate, 0) / ratings?.length}
         readOnly
       />
-      <Button variant="contained" color="primary">
+      {/* <p>Colors:{colors.join(", ")}</p>
+      <p>Sizes:{colors.join(", ")}</p> */}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => handleAddToCart(_id)}
+      >
         Add to cart
       </Button>
     </Box>

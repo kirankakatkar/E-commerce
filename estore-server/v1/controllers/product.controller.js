@@ -2,7 +2,6 @@ const fs = require("fs");
 const ProductModel = require("../models/product.model");
 
 class ProductCtrl {
-  //createProduct
   static createProduct(req, res) {
     const product = req.body;
 
@@ -26,12 +25,12 @@ class ProductCtrl {
       .catch((err) => {
         res.status(500).send({ message: "Product not created", error: err });
       });
-  }
+  } //createProduct
 
-  //updateProduct
   static updateProduct(req, res) {
     const { id } = req.params;
     const product = req.body;
+
     if (req?.files?.length > 0)
       product.images = req?.files?.map((file) => `products/${file?.filename}`);
 
@@ -60,9 +59,8 @@ class ProductCtrl {
       .catch((err) => {
         res.status(404).send({ message: "Product not created", error: err });
       });
-  }
+  } //updateProduct
 
-  //deleteProduct
   static deleteProduct(req, res) {
     const { id } = req.params;
 
@@ -73,12 +71,11 @@ class ProductCtrl {
       .catch((err) => {
         res.status(404).send({ message: "Product not deleted", error: err });
       });
-  }
+  } //deleteProduct
 
   static fetchOneProduct(req, res) {
     const { id } = req.params;
 
-    //fetchOneProduct
     ProductModel.findOne({ _id: id })
       .populate("categories ratings")
       .exec()
@@ -94,11 +91,10 @@ class ProductCtrl {
           .status(404)
           .send({ message: "The product is not available", error: err });
       });
-  }
+  } //fetchOneProduct
 
-  //fetchAllProduct
   static fetchAllProduct(req, res) {
-    const { status, cat, brand, sortBy, colors, sizes } = req.query;
+    const { status, cat, brand, sortBy, colors, sizes, search, id } = req.query;
 
     let filter = {};
     if (!status) filter = { $or: [{ status: 0 }, { status: 1 }] };
@@ -106,6 +102,10 @@ class ProductCtrl {
     if (cat) {
       const catArr = cat.split("_");
       filter.categories = { $in: catArr };
+    }
+    if (id) {
+      const idArr = id.split("_");
+      filter._id = { $in: idArr };
     }
 
     if (colors) {
@@ -118,10 +118,14 @@ class ProductCtrl {
       filter.sizes = { $in: sizeArr };
     }
 
+    if (search) {
+      filter.title = new RegExp(search, "gi");
+    }
+
     if (status) filter.status = status;
     if (brand) filter.brand = brand;
 
-    console.log("filter", filter);
+    console.log("Filter: ", filter);
 
     const sortObj = {};
     if (sortBy == "priceAsc") sortObj.price = 1;
@@ -143,7 +147,7 @@ class ProductCtrl {
           .status(404)
           .send({ message: "The products are not available", error: err });
       });
-  }
+  } //fetchAllProduct
 }
 
 module.exports = ProductCtrl;

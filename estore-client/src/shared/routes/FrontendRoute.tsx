@@ -1,4 +1,5 @@
 import Catalog from "../../features/frontend/catalog/Catalog";
+import Checkout from "../../features/frontend/checkout/Checkout";
 import Contact from "../../features/frontend/contact/Contact";
 import Home from "../../features/frontend/home/Home";
 import Login from "../../features/frontend/login/Login";
@@ -46,6 +47,12 @@ export default [
     label: "Terms",
     path: "tc",
     component: <TC />,
+    showInMenu: false,
+  },
+  {
+    label: "Checkout",
+    path: "checkout",
+    component: <Checkout />,
     showInMenu: false,
   },
 ];

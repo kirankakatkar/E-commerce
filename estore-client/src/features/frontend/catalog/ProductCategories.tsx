@@ -5,8 +5,8 @@ import Paper from "@mui/material/Paper";
 
 import CategoryService from "../../../services/CategoryService";
 import Category from "../../../shared/models/CategoryModel";
-import CategoryTree from "../../../ui/category-tree/CategoryTree";
 import { useSearchParams } from "react-router-dom";
+import CategoryTree from "../../../ui/category-tree/CategoryTree";
 
 interface IProductCategories {}
 

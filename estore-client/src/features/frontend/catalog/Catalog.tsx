@@ -5,6 +5,8 @@ import Product from "../../../shared/models/ProductModel";
 import ProductService from "../../../services/ProductService";
 import CatalogSidebar from "./CatalogSidebar";
 import { useSearchParams } from "react-router-dom";
+import SortProduct from "./SortProduct";
+
 interface ICatalogProps {}
 
 interface IFilterProduct {
@@ -62,8 +64,17 @@ const Catalog: React.FunctionComponent<ICatalogProps> = (props) => {
       <Grid item xs={12} md={3}>
         <CatalogSidebar filterState={filterState} />
       </Grid>
-      <Grid item container xs={12} md={9}>
-        <Grid xs={12}>Sorting</Grid>
+      <Grid
+        item
+        container
+        xs={12}
+        md={9}
+        justifyContent="flex-end"
+        sx={{ p: 2 }}
+      >
+        <Grid xs={12} md={4}>
+          <SortProduct />
+        </Grid>
         <Grid xs={12}>
           <ProductListing products={products} />
         </Grid>

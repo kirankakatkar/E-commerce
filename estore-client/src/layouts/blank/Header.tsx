@@ -11,6 +11,7 @@ import { styled } from "@mui/material/styles";
 import { NavLink, useLocation } from "react-router-dom";
 import frontendRoutes from "../../shared/routes/FrontendRoute";
 import SearchField from "../../features/frontend/catalog/SearchField";
+import CartIcon from "../../features/frontend/checkout/CartIcon";
 
 const MuiNavLink = styled(NavLink)({
   color: "#fff",
@@ -24,7 +25,7 @@ const Header = () => {
   console.log("Pathname ", pathname);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, position: "sticky", top: 0 }}>
       <AppBar position="static">
         <Toolbar>
           <Avatar
@@ -61,6 +62,9 @@ const Header = () => {
                     </MuiNavLink>
                   );
                 })}
+          </Box>
+          <Box>
+            <CartIcon />
           </Box>
         </Toolbar>
       </AppBar>
