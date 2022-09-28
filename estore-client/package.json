@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
-    "@types/mui-datatables": "^3.7.9"
+    "@types/mui-datatables": "^3.7.9",
+    "@types/redux-persist": "^4.3.1"
   }
 }

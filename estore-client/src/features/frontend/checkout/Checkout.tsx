@@ -16,6 +16,7 @@ interface ICheckoutProps {}
 interface ITotal {
   price: number;
   items: number;
+  saved?: number;
 }
 
 const Checkout: React.FunctionComponent<ICheckoutProps> = (props) => {
@@ -80,7 +81,7 @@ const Checkout: React.FunctionComponent<ICheckoutProps> = (props) => {
   React.useEffect(() => {
     if (Array.isArray(products)) {
       const totalPrice = products.reduce((prev, prod) => {
-        if (prod) {
+        if (prod && prod?.price) {
           return prev + prod?.price * prod?.qty;
         } else return prev;
       }, 0);
@@ -92,6 +93,7 @@ const Checkout: React.FunctionComponent<ICheckoutProps> = (props) => {
       setTotal({
         price: totalPrice,
         items: totalItems,
+        saved: 0,
       });
     }
   }, [products]);
