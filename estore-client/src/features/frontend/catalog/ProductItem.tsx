@@ -4,8 +4,8 @@ import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import { endpoints } from "../../../api";
 
-import { useDispatch } from "react-redux";
-import { addItem } from "../../../app/slices/CartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { updateItem, selectCart } from "../../../app/slices/CartSlice";
 
 interface Rating {
   rate: number;
@@ -18,6 +18,8 @@ interface IProductItemProps {
   ratings: Rating[];
   brand?: string;
   discountedPrice: number;
+  colors: string[];
+  sizes: string[];
 }
 
 const ProductItem: React.FunctionComponent<IProductItemProps> = ({
@@ -28,14 +30,24 @@ const ProductItem: React.FunctionComponent<IProductItemProps> = ({
   discountedPrice,
   ratings,
   title,
+  colors,
+  sizes,
 }) => {
   const dispatch = useDispatch();
+  const cart = useSelector(selectCart);
+
+  const ids = React.useMemo(() => {
+    return cart.products.reduce((prev: string[], obj: any) => {
+      return [...prev, obj._id];
+    }, []);
+  }, [cart.products]);
 
   const handleAddToCart = (id: string) => {
     if (id) {
-      dispatch(addItem({ _id: id }));
+      dispatch(updateItem({ _id: id, qty: 1 }));
     }
   };
+
   return (
     <Box
       sx={{
@@ -67,14 +79,15 @@ const ProductItem: React.FunctionComponent<IProductItemProps> = ({
         value={ratings?.reduce((p, r) => p + r.rate, 0) / ratings?.length}
         readOnly
       />
-      {/* <p>Colors:{colors.join(", ")}</p>
-      <p>Sizes:{colors.join(", ")}</p> */}
+      <p>Colors:{colors.join(", ")} </p>
+      <p>Sizes:{sizes.join(", ")} </p>
       <Button
         variant="contained"
         color="primary"
         onClick={() => handleAddToCart(_id)}
+        disabled={ids.includes(_id)}
       >
-        Add to cart
+        {ids.includes(_id) ? "Added" : "Add"} to cart
       </Button>
     </Box>
   );

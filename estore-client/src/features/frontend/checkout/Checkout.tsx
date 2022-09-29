@@ -1,11 +1,12 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
-import { useSelector } from "react-redux";
-import { selectCart } from "../../../app/slices/CartSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCart, updateItem } from "../../../app/slices/CartSlice";
 import ProductService from "../../../services/ProductService";
 import { endpoints } from "../../../api";
 import Product from "../../../shared/models/ProductModel";
@@ -21,6 +22,7 @@ interface ITotal {
 
 const Checkout: React.FunctionComponent<ICheckoutProps> = (props) => {
   const cart = useSelector(selectCart);
+  const dispatch = useDispatch();
   const [products, setProducts] = React.useState<Product[]>([]);
   const [total, setTotal] = React.useState<ITotal>({
     price: 0,
@@ -28,35 +30,19 @@ const Checkout: React.FunctionComponent<ICheckoutProps> = (props) => {
   });
 
   const handleChange = (id: string, value: any) => {
-    const arr = [...products];
-    const index = arr.findIndex((prod) => prod._id == id);
-    if (index >= 0) {
-      const obj = arr[index];
-      obj.qty = value;
-      setProducts(arr);
-    }
+    // const arr = [...products];
+    // const index = arr.findIndex((prod) => prod._id == id);
+    // if (index >= 0) {
+    //   const obj = arr[index];
+    //   obj.qty = value;
+    //   setProducts(arr);
+    // }
+
+    dispatch(updateItem({ _id: id, qty: value }));
   };
 
   React.useEffect(() => {
     // fetch all the products of the cart
-
-    // const   products = [
-    //         { _id: "sdfsdf", qty: 1 },
-    //         { _id: "cvcvc", qty: 4 },
-    //         { _id: "r3434", qty: 2 },
-    //       ]
-
-    // const serProdcuts = [
-    //   {_id:"sdflsdf",title:"sdfsdf",price:10},
-    //   {_id:"sdflsdf",title:"sdfsdf",price:10},
-    //   {_id:"sdflsdf",title:"sdfsdf",price:10},
-    // ]
-
-    // const arr = [
-    //   {_id:"sdflsdf",title:"sdfsdf",price:10,qty:10},
-    //   {_id:"sdflsdf",title:"sdfsdf",price:10,qty:10},
-    //   {_id:"sdflsdf",title:"sdfsdf",price:10,qty:3},
-    // ]
 
     const ids = cart.products.reduce((prev, prod) => {
       return prev + (prev ? "_" : "") + prod._id;
@@ -86,14 +72,24 @@ const Checkout: React.FunctionComponent<ICheckoutProps> = (props) => {
         } else return prev;
       }, 0);
 
+      const totalDPrice = products.reduce((prev, prod) => {
+        if (prod && prod?.price) {
+          return (
+            prev +
+            (prod?.discountedPrice ? prod.discountedPrice : prod.price) *
+              prod?.qty
+          );
+        } else return prev;
+      }, 0);
+
       const totalItems = products.reduce((prev, prod) => {
         return prev + prod.qty;
       }, 0);
 
       setTotal({
-        price: totalPrice,
+        price: totalDPrice,
         items: totalItems,
-        saved: 0,
+        saved: totalPrice - totalDPrice,
       });
     }
   }, [products]);
@@ -120,7 +116,16 @@ const Checkout: React.FunctionComponent<ICheckoutProps> = (props) => {
                       </Grid>
                       <Grid item xs={12} md={7} lg={8} xl={9}>
                         <h4>{prod.title}</h4>
-                        <p>Price: {prod.price}</p>
+                        <p>
+                          Price:
+                          {prod.discountedPrice ? (
+                            <>
+                              {prod.discountedPrice} <s>{prod.price} </s>
+                            </>
+                          ) : (
+                            prod.price
+                          )}
+                        </p>
                         <p>Qty: {prod.qty}</p>
 
                         <DropDown
@@ -155,6 +160,7 @@ const Checkout: React.FunctionComponent<ICheckoutProps> = (props) => {
           <Paper sx={{ padding: 2 }}>
             <h4>Total Items: {total.items}</h4>
             <p>Subtotal: {total.price}</p>
+            <p>You Saved: {total.saved}</p>
             <Button variant="contained" color="primary" fullWidth>
               Proceed to pay
             </Button>

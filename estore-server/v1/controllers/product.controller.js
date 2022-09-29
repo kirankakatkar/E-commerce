@@ -125,7 +125,7 @@ class ProductCtrl {
     if (status) filter.status = status;
     if (brand) filter.brand = brand;
 
-    console.log("Filter: ", filter);
+    // console.log("Filter: ", filter);
 
     const sortObj = {};
     if (sortBy == "priceAsc") sortObj.price = 1;
