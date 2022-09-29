@@ -15,7 +15,17 @@ const ProductListing: React.FunctionComponent<IProductListingProps> = ({
     <Box component="section" sx={{ display: "flex" }} flexWrap="wrap">
       {Array.isArray(products) &&
         products.map(
-          ({ _id, images, title, brand, price, discountedPrice, ratings }) => (
+          ({
+            _id,
+            images,
+            title,
+            brand,
+            price,
+            discountedPrice,
+            ratings,
+            sizes,
+            colors,
+          }) => (
             <ProductItem
               key={_id}
               _id={_id}
@@ -25,6 +35,8 @@ const ProductListing: React.FunctionComponent<IProductListingProps> = ({
               price={price as number}
               discountedPrice={discountedPrice as number}
               ratings={ratings as any[]}
+              sizes={sizes as any[]}
+              colors={colors as any[]}
             />
           )
         )}

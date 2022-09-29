@@ -1,10 +1,12 @@
 const express = require("express");
+const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 require("./v1/models/db");
 const app = express();
 app.use(cors());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Expose-Headers", ["x-token", "x-refresh"]);
